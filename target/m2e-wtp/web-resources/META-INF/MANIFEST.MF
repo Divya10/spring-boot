@@ -6,4 +6,5 @@ Implementation-Vendor-Id: internship1
 Build-Jdk: 1.8.0_111
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
+Main-Class: netgloo.Application
 

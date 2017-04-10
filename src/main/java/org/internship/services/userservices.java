@@ -12,7 +12,7 @@ public class userservices {
      userrepository userrepository;
      
      public String findByEmailAsUser(String email){
- 		userdet user = userrepository.findByEmail(email);
+ 		userdet user = userrepository.getByEmail(email);
  		return user.getEmail();
  	}
      

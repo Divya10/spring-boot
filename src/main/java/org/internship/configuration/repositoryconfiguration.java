@@ -11,7 +11,7 @@ package org.internship.configuration;
 	@Configuration
 	@EnableAutoConfiguration
 	@EntityScan(basePackages = {"org.internship.models"})
-	@EnableJpaRepositories(basePackages = {"guru.springframework.repositories"})
+	@EnableJpaRepositories(basePackages = {"org.internship.repositories"})
 	@EnableTransactionManagement
 	public class repositoryconfiguration {
 	}

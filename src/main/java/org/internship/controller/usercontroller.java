@@ -2,7 +2,8 @@ package org.internship.controller;
 
 import javax.servlet.http.HttpSession;
 
-
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.internship.models.userdet;
 import org.internship.repository.userrepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.internship.services.userservices;
 @Controller
 public class usercontroller {
-	
+
+	private SessionFactory sessionFactory;
 	@Autowired
 	private userservices userservices;
 	
@@ -32,9 +34,30 @@ public class usercontroller {
 	 * controller for signup
 	 * @return
 	 */
+
+	/**
+	 * controller for signup
+	 * @return
+	 */
+	
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ModelAndView signup(@ModelAttribute("user") org.internship.models.userdet user){
+		Session session = sessionFactory.openSession();
+		ModelAndView model = new ModelAndView("index");
+			if (session.get(userdet.class, user.getEmail()) == null) {
+			session.beginTransaction();
+			session.save(user);
+			session.getTransaction().commit();
+			model.addObject("invalid", "Successfully registered, login to proceed!");
+
+		} else
+			model.addObject("invalid", "This email is already registered.");
+		session.close();
+		return model;
+
+	}
 	
 
-	
 
 	
 	/**
