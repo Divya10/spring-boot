@@ -23,7 +23,7 @@ public class usercontroller {
 	
 	 private userdet user;
 	
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView indexpage() {
 
 		ModelAndView model = new ModelAndView("index");
