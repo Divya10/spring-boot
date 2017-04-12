@@ -11,7 +11,7 @@ package org.internship.configuration;
 	@Configuration
 	@EnableAutoConfiguration
 	@EntityScan(basePackages = {"org.internship.models"})
-	@EnableJpaRepositories(basePackages = {"org.internship.repositories"})
+	@EnableJpaRepositories(basePackages = {"org.internship.repository"})
 	@EnableTransactionManagement
 	public class repositoryconfiguration {
 	}
