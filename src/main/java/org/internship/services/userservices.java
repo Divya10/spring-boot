@@ -10,10 +10,16 @@ public class userservices {
      
 	 @Autowired
      userrepository userrepository;
+	 
+	 public userdet save(userdet user){
+		 
+	 		return userrepository.save(user);
+	 	}
+	     
      
-     public String findByEmailAsUser(String email){
- 		userdet user = userrepository.getByEmail(email);
- 		return user.getEmail();
+     public userdet findByEmailAsUser(String email){
+ 		userdet user = userrepository.findByEmail(email);
+ 		return user;
  	}
      
      
