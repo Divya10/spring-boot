@@ -72,6 +72,7 @@ public class usercontroller {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(HttpSession httpSession, @RequestParam("id") String email,
 			@RequestParam("pass") String password) {
+		
 	    ModelAndView model =  new ModelAndView("login");
 	    userdet user=userservices.findByEmailAsUser(email);
 	if(user!=null)
