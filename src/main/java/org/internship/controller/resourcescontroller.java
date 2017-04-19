@@ -12,7 +12,7 @@ public class resourcescontroller {
 	@Autowired
 	private userservices userService;
 
-	@RequestMapping("/user/users")
+	@RequestMapping("/internship/users")
 	public String loginSuccess() {
 		return "Login Successful!";
 	}
