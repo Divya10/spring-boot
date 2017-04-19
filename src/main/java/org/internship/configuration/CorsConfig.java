@@ -20,7 +20,7 @@ public class CorsConfig
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
 		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
+		config.addAllowedHeader("http://localhost/internship/**");
 		config.addAllowedMethod("OPTIONS");
 		config.addAllowedMethod("HEAD");
 		config.addAllowedMethod("GET");

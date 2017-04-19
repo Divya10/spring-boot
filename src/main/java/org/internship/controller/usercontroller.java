@@ -1,5 +1,8 @@
 package org.internship.controller;
 
+import java.sql.Date;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
@@ -10,11 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 import org.internship.services.userservices;
 
 @CrossOrigin(origins = "http://localhost:8080", maxAge=3600)
@@ -28,7 +37,7 @@ public class usercontroller {
 	
 	 private userdet user;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexpage() {
 
 		ModelAndView model = new ModelAndView("index");
@@ -42,19 +51,17 @@ public class usercontroller {
 	 */
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView signup(@ModelAttribute("user") org.internship.models.userdet user){
-		Session session = sessionFactory.openSession();
-		ModelAndView model = new ModelAndView("signup");
-			if (session.get(userdet.class, user.getEmail()) == null) {
-			session.beginTransaction();
-			userservices.save(user);
-			session.getTransaction().commit();
-			model.addObject("invalid", "Successfully registered, login to proceed!");
+	public userdet signup(@RequestBody userdet user){
+		
+		
+		userdet user1 = userservices.findByEmailAsUser(user.getEmail());
 
-		} else
-			model.addObject("invalid", "This email is already registered.");
-		session.close();
-		return model;
+		if (user1 == null) {
+			return userservices.save(user);
+		}
+		
+		return null;
+
 
 	}
 	
@@ -67,26 +74,37 @@ public class usercontroller {
 	 * @param emailid
 	 * @param password
 	 * @return
+	 * @throws ServletException 
 	 */
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(HttpSession httpSession, @RequestParam("id") String email,
-			@RequestParam("pass") String password) {
+	public String login(@RequestBody userdet user) throws ServletException {
 		
-	    ModelAndView model =  new ModelAndView("login");
-	    userdet user=userservices.findByEmailAsUser(email);
-	if(user!=null)
-		{
-		   if(user.getPass().equals(password))
-		   model.addObject("invalid", "successfully logged in");
+		String jwtToken = "";
+
+		if (user.getEmail() == null || user.getPass() == null) {
+			throw new ServletException("Please fill in username and password");
 		}
-	else
-	    {
-		
-			model.addObject("invalid", "invalid id or password");
-			
-	    }
-		return model;
+
+		String email = user.getEmail();
+		String password = user.getPass();
+
+		userdet user1 = userservices.findByEmailAsUser(email);
+
+		if (user == null) {
+			throw new ServletException("User name not found.");
+		}
+
+		String pwd = user1.getPass();
+
+		if (!password.equals(pwd)) {
+			throw new ServletException("Invalid login. Please check your name and password.");
+		}
+
+		jwtToken = Jwts.builder().setSubject(user1.getName()).claim("roles", "user").setIssuedAt(null)
+				.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+
+		return jwtToken;
 	}
 	
 	
@@ -96,11 +114,9 @@ public class usercontroller {
 	 * @return
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ModelAndView LogoutController(HttpSession httpSession) {
+	public String LogoutController(HttpSession httpSession) {
 		httpSession.invalidate();
-		ModelAndView model = new ModelAndView("logout");
-		model.addObject("invalid", "successfully logged out");
-		return model;
+				return "Successfully Logged Out";
 	}
 	
 	
