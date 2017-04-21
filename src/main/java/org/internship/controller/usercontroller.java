@@ -26,9 +26,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.internship.services.userservices;
 
-@CrossOrigin(origins = "http://localhost:8080", maxAge=3600)
-@RestController
-@RequestMapping("/internship")
+@CrossOrigin(origins = "http://localhost", maxAge=3600)
+@Controller
+@RequestMapping("/user")
 public class usercontroller {
 
 	private SessionFactory sessionFactory;
