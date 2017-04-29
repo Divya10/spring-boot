@@ -1,0 +1,62 @@
+# Java Generated
+*.class
+*.jar
+*.war
+*.ear
+
+# other
+dump.rdb
+
+# gradle
+.gradle/
+bin/
+build/
+npm-debug.log.*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Spring Generated
+.springBeans
+
+# Eclipse Generated
+.classpath
+.project
+.settings/
+.metadata/
+server/target/
+
+# IntelliJ Generated
+.idea
+
+# Front End Dependency Generated
+client/.sass-cache/
+client/bower_components/
+client/dist/
+client/node/
+client/node/*
+client/node_modules/*
+client/node_modules/
+client/npm-debug.log
+client/.tscache/
+client/scss/.tmp/
+client/js/lib/
+client/typings/
+client/coverage/
+dist/
+client/aot
+client/aot_old
+client/yarn.lock
+client/*.iml
+client/*.ipr
+client/*.iws
+server/*.iml
+server/*.ipr
+server/*.iws
+CHANGELOG.md
